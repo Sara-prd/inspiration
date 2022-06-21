@@ -1,5 +1,6 @@
 package com.example.diary;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ public class DataBase {
     private static List<Album> albumList =new ArrayList<>();
     private static Album album = new Album() ;
 
-//    private static int[] photos= new int[]{
+
+    //    private static int[] photos= new int[]{
 //            R.drawable.safar,
 //            R.drawable.nozad,
 //            R.drawable.tabiat,
@@ -35,6 +37,8 @@ public class DataBase {
 //            "دکوراسیون",
 //            "تولد",
 //    };
+
+
 
 
     public static List<Album> createAlbum() {
@@ -125,38 +129,28 @@ public class DataBase {
         album10.setTitle("دکوراسیون");
         albumList.add(album10);
 
-        //        albumCover.getPhotoSources().add(R.drawable.tabiat);
-//        albumCover.setTitle("طبیعت");
-//        albumCoverList.add(albumCover);
-//
-//        albumCover.getPhotoSources().add(R.drawable.kouh);
-//        albumCover.setTitle("کوهنوردی");
-//        albumCoverList.add(albumCover);
-//
-//        albumCover.getPhotoSources().add(R.drawable.dustan);
-//        albumCover.setTitle("دوستان");
-//        albumCoverList.add(albumCover);
-//
-//        albumCover.getPhotoSources().add(R.drawable.dorehami);
-//        albumCover.setTitle("دورهمی");
-//        albumCoverList.add(albumCover);
-//
-//        albumCover.getPhotoSources().add(R.drawable.aroosi);
-//        albumCover.setTitle("عروسی");
-//        albumCoverList.add(albumCover);
-//
-//        albumCover.getPhotoSources().add(R.drawable.tavalod);
-//        albumCover.setTitle("تولد");
-//        albumCoverList.add(albumCover);
-//
-//        albumCover.getPhotoSources().add(R.drawable.honari);
-//        albumCover.setTitle("هنری");
-//        albumCoverList.add(albumCover);
-//
-//        albumCover.getPhotoSources().add(R.drawable.decor);
-//        albumCover.setTitle("دکوراسیون");
-//        albumCoverList.add(albumCover);
+        return albumList;
+    }
 
+    public static List<Album> getAlbumList() {
+        return albumList;
+    }
+
+    public static void setAlbumList(List<Album> albumList) {
+        DataBase.albumList = albumList;
+    }
+
+    public static List<Album> addAlbum(MainFragment context, Album album){
+        albumList.add(0,album);
+        if (album.getTitle() == null) {
+            albumList.get(0).setTitle(context.getResources().getString(R.string.title));
+        }
+        Log.i("KEY", "new title is "+albumList.get(0).getTitle());
+
+        if (album.getPhotos().isEmpty() ) {
+            Log.i("KEY", "new album photo is "+albumList.get(0).toString());
+
+            albumList.get(0).getPhotos().add(R.drawable.empty);}
         return albumList;
     }
 }

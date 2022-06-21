@@ -98,10 +98,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         public void bindContent (final Album album){
             title.setText(album.getTitle());
             photo.setImageResource(album.getPhotos().get(0));
+            Log.i("album","the title became: "+title.getText());
+
             itemView.setOnClickListener(view -> {
                 albumClickListener.onAlbumClick(album);
                 Log.i("album", "album"+album.getTitle() +"is clicked");
-                        });
+            });
 
         }
     }

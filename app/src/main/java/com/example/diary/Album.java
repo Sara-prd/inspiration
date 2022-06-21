@@ -12,6 +12,7 @@ public class Album implements Parcelable {
     private  String title;
     private  List<Integer> photos = new ArrayList<>();
 
+
     public Album() {
     }
 
