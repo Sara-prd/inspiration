@@ -19,39 +19,11 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     private AlbumClickListener albumClickListener;
 
 
-//    private List<String> albumTitles = new ArrayList<>();
-//    private List<Integer> photoAddress = new ArrayList<>();
-
     public AlbumAdapter(List<Album> albumList, AlbumClickListener albumClickListener) {
 
         this.albumList = albumList;
         this.albumClickListener=albumClickListener;
 
-//        for (int l=0 ; l<albumCoverList.size()-1;l++){
-//            albumTitles.add(albumCoverList.get(l).getTitle() );
-//            photoAddress.add(albumCoverList.get(l).getPhotoSources().get(0) );
-//        }
-//        photoAddress.add(R.drawable.safar);
-//        photoAddress.add(R.drawable.nozad);
-//        photoAddress.add(R.drawable.tabiat);
-//        photoAddress.add(R.drawable.kouh);
-//        photoAddress.add(R.drawable.dustan);
-//        photoAddress.add(R.drawable.dorehami);
-//        photoAddress.add(R.drawable.aroosi);
-//        photoAddress.add(R.drawable.tavalod);
-//        photoAddress.add(R.drawable.honari);
-//        photoAddress.add(R.drawable.decor);
-//        albumTitles.add("سفر");
-//        albumTitles.add("نوزاد");
-//        albumTitles.add("طبیعت");
-//        albumTitles.add("کوهنوردی");
-//        albumTitles.add("دوستان");
-//        albumTitles.add("دورهمی");
-//        albumTitles.add("عروسی");
-//        albumTitles.add("تولد");
-//        albumTitles.add("هنری");
-//        albumTitles.add("دکوراسیون");
-//        albumTitles.add("تولد");
     };
 
     @NonNull
@@ -97,7 +69,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         }
         public void bindContent (final Album album){
             title.setText(album.getTitle());
-            photo.setImageResource(album.getPhotos().get(0));
+//            photo.setImageResource(album.getPhotos().get(0));
+            photo.setImageResource(album.getPhotoCoverAddress());
             Log.i("album","the title became: "+title.getText());
 
             itemView.setOnClickListener(view -> {

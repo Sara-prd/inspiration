@@ -21,11 +21,12 @@ public class MainFragment extends Fragment {
     private RecyclerView albumRV;
     private List<Album> albumList;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.albumList = DataBase.createAlbum();
+        SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
+        this.albumList = sqLiteHelper.getAllAlbums();
+//        this.albumList=DataBase.createAlbum();
     }
 
     @Nullable
@@ -38,7 +39,6 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         albumRV =view.findViewById(R.id.mp_recyclerView);
-//        albumRV.setLayoutManager(new GridLayoutManager(getContext(),2 ));
         albumRV.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         AlbumAdapter albumAdapter = new AlbumAdapter(albumList, new AlbumClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class MainFragment extends Fragment {
 
         view.findViewById(R.id.mp_btn_add_album).setOnClickListener(view1 -> {
             Album newAlbum= new Album();
-            DataBase.addAlbum(this,newAlbum);
+            DataBase.addAlbum(newAlbum);
             Log.i("album", "the new album is "+newAlbum.toString());
 
             Log.i("album", "the number of albums are "+DataBase.getAlbumList().size());

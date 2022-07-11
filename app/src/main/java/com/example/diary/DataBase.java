@@ -140,10 +140,10 @@ public class DataBase {
         DataBase.albumList = albumList;
     }
 
-    public static List<Album> addAlbum(MainFragment context, Album album){
+    public static List<Album> addAlbum(Album album){
         albumList.add(0,album);
         if (album.getTitle() == null) {
-            albumList.get(0).setTitle(context.getResources().getString(R.string.title));
+            albumList.get(0).setTitle(String.valueOf(R.string.albumTitle));
         }
         Log.i("KEY", "new title is "+albumList.get(0).getTitle());
 
