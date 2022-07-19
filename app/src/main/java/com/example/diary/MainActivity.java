@@ -10,8 +10,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Album> albumList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +17,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         
         setSupportActionBar(findViewById(R.id.mp_toolbar));
-//        SQLiteHelper sqLiteHelper = new SQLiteHelper(this);
-//        albumList = sqLiteHelper.getAllAlbums();
 
 
-
-        //        findViewById(R.id.mp_btn_add_album).setOnClickListener(view -> {
+//            findViewById(R.id.mp_btn_add_album).setOnClickListener(view -> {
 //            Log.i("Album", "add button is clicked and fragment should begin");
 //            FragmentTransaction replaceTransaction =getSupportFragmentManager().beginTransaction();
 //            replaceTransaction.replace(R.id.mp_container, new PhotoFragment());

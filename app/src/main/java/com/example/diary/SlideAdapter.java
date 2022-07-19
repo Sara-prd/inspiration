@@ -32,15 +32,17 @@ public class SlideAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         SlideFragment slideFragment =new SlideFragment();
         Bundle bundle= new Bundle();
-        bundle.putInt("data",album.getPhotos().get(position));
+//        bundle.putint("data",album.getPhoto().get(position));
+        bundle.putString("data",album.getPhotoUri());
         slideFragment.setArguments(bundle);
-
         return slideFragment;
     }
 
     @Override
     public int getItemCount() {
 
-        return album.getPhotos().size();
+//        return album.getPhotos().size();
+//        return album.getPhotoUri().size();
+        return 1;
     }
 }

@@ -1,20 +1,31 @@
 package com.example.diary;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+
+@Entity(tableName = "tbl_album")
 public class Album implements Parcelable {
 
+    @PrimaryKey (autoGenerate = true)
     private  int id;
+
+//    @ColumnInfo (defaultValue = "نوزاد")
     private  String title;
-    private  List<Integer> photos = new ArrayList<>();
-    private int photoCoverAddress;
-    private  Uri photoUri;
+
+//    @ColumnInfo(defaultValue = "android.resource://your.package.here/drawable/empty")
+    private  String photoUri;
+
+    private String mainText;
+
+//    @ColumnInfo (defaultValue = "نوزاد")
+//    private int photoCoverAddress;
+
+//    private  List<Integer> photos = new ArrayList<>();
 
     public Album() {
     }
@@ -46,6 +57,13 @@ public class Album implements Parcelable {
     }
 
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -55,51 +73,45 @@ public class Album implements Parcelable {
         this.title = title;
     }
 
-    public List<Integer> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<Integer> photos) {
-        this.photos = photos;
-    }
-
-
-    public int getPhotoCoverAddress() {
-        return photoCoverAddress;
-    }
-
-    public void setPhotoCoverAddress(int photoCoverAddress) {
-        this.photoCoverAddress = photoCoverAddress;
-    }
-
-    public Uri getPhotoUri() {
+    public String getPhotoUri() {
         return photoUri;
     }
 
-    public void setPhotoUri(Uri photoUri) {
+    public void setPhotoUri(String photoUri) {
         this.photoUri = photoUri;
     }
 
-    public int getId() {
-        return id;
+    public String getMainText() {
+        return mainText;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMainText(String mainText) {
+        this.mainText = mainText;
     }
 
-    @Override
-    public String toString() {
-        return "Album{" +
-                "title='" + title + '\'' +
-                ", photos=" + photos +
-                '}';
-    }
+    //    public int getPhotoCoverAddress() {
+//        return photoCoverAddress;
+//    }
+//
+//    public void setPhotoCoverAddress(int photoCoverAddress) {
+//        this.photoCoverAddress = photoCoverAddress;
+//    }
+
+//    public List<Integer> getPhotos() {
+//        return photos;
+//    }
+//
+//    public void setPhotos(List<Integer> photos) {
+//        this.photos = photos;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "Album{" +
+//                "title='" + title + '\'' +
+//                ", photos=" + photos +
+//                '}';
+//    }
 
 
-
-    //    public void clearAlbum(){
-    //        title="";
-    //        photos.clear();
-    //    }
 }

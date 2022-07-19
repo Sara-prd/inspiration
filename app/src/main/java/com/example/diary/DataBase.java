@@ -58,74 +58,74 @@ public class DataBase {
 //        }
 
         Album album1 = new Album() ;
-        album1.getPhotos().add(R.drawable.safar);
-        album1.getPhotos().add(R.drawable.nozad);
-        album1.getPhotos().add(R.drawable.tabiat);
+//        album1.getPhotos().add(R.drawable.safar);
+//        album1.getPhotos().add(R.drawable.nozad);
+//        album1.getPhotos().add(R.drawable.tabiat);
         album1.setTitle("سفر");
         albumList.add(album1);
         Log.i ("Album", "album1 is "+ album1.toString());
         Log.i ("Album", String.valueOf(albumList.size())+"albumLTitle is "+ albumList.get(0).getTitle());
 
         Album album2 = new Album() ;
-        album2.getPhotos().add(R.drawable.nozad);
-        album2.getPhotos().add(R.drawable.tabiat);
-        album2.getPhotos().add(R.drawable.kouh);
+//        album2.getPhotos().add(R.drawable.nozad);
+//        album2.getPhotos().add(R.drawable.tabiat);
+//        album2.getPhotos().add(R.drawable.kouh);
         album2.setTitle("نوزاد");
         albumList.add(album2);
         Log.i ("Album", "album1 is "+ album2.toString());
         Log.i ("Album", String.valueOf(albumList.size())+"albumLTitle is "+ albumList.get(1).getTitle());
 
         Album album3 = new Album() ;
-        album3.getPhotos().add(R.drawable.tabiat);
-        album3.getPhotos().add(R.drawable.kouh);
+//        album3.getPhotos().add(R.drawable.tabiat);
+//        album3.getPhotos().add(R.drawable.kouh);
         album3.setTitle("طبیعت");
         albumList.add(album3);
 
         Album album4 = new Album() ;
-        album4.getPhotos().add(R.drawable.kouh);
+//        album4.getPhotos().add(R.drawable.kouh);
         album4.setTitle("کوه");
         albumList.add(album4);
 
         Album album5 = new Album() ;
-        album5.getPhotos().add(R.drawable.dustan);
-        album5.getPhotos().add(R.drawable.tabiat);
-        album5.getPhotos().add(R.drawable.kouh);
+//        album5.getPhotos().add(R.drawable.dustan);
+//        album5.getPhotos().add(R.drawable.tabiat);
+//        album5.getPhotos().add(R.drawable.kouh);
         album5.setTitle("دوستان");
         albumList.add(album5);
 
         Album album6 = new Album() ;
-        album6.getPhotos().add(R.drawable.dorehami);
-        album6.getPhotos().add(R.drawable.tabiat);
-        album6.getPhotos().add(R.drawable.kouh);
+//        album6.getPhotos().add(R.drawable.dorehami);
+//        album6.getPhotos().add(R.drawable.tabiat);
+//        album6.getPhotos().add(R.drawable.kouh);
         album6.setTitle("دورهمی");
         albumList.add(album6);
 
 
         Album album7 = new Album() ;
-        album7.getPhotos().add(R.drawable.tavalod);
-        album7.getPhotos().add(R.drawable.tabiat);
-        album7.getPhotos().add(R.drawable.kouh);
+//        album7.getPhotos().add(R.drawable.tavalod);
+//        album7.getPhotos().add(R.drawable.tabiat);
+//        album7.getPhotos().add(R.drawable.kouh);
         album7.setTitle("تولد");
         albumList.add(album7);
 
         Album album8 = new Album() ;
-        album8.getPhotos().add(R.drawable.aroosi);
-        album8.getPhotos().add(R.drawable.tabiat);
-        album8.getPhotos().add(R.drawable.kouh);
+//        album8.getPhotos().add(R.drawable.aroosi);
+//        album8.getPhotos().add(R.drawable.tabiat);
+//        album8.getPhotos().add(R.drawable.kouh);
         album8.setTitle("عروسی");
         albumList.add(album8);
 
         Album album9 = new Album() ;
-        album9.getPhotos().add(R.drawable.honari);
-        album9.getPhotos().add(R.drawable.tabiat);
-        album9.getPhotos().add(R.drawable.kouh);
+//        album9.getPhotos().add(R.drawable.honari);
+//        album9.getPhotos().add(R.drawable.tabiat);
+//        album9.getPhotos().add(R.drawable.kouh);
         album9.setTitle("هنری");
         albumList.add(album9);
 
         Album album10 = new Album() ;
-        album10.getPhotos().add(R.drawable.decor);
-        album10.getPhotos().add(R.drawable.tabiat);
-        album10.getPhotos().add(R.drawable.kouh);
+//        album10.getPhotos().add(R.drawable.decor);
+//        album10.getPhotos().add(R.drawable.tabiat);
+//        album10.getPhotos().add(R.drawable.kouh);
         album10.setTitle("دکوراسیون");
         albumList.add(album10);
 
@@ -147,10 +147,10 @@ public class DataBase {
         }
         Log.i("KEY", "new title is "+albumList.get(0).getTitle());
 
-        if (album.getPhotos().isEmpty() ) {
+//        if (album.getPhotos().isEmpty() ) {
             Log.i("KEY", "new album photo is "+albumList.get(0).toString());
 
-            albumList.get(0).getPhotos().add(R.drawable.empty);}
+//            albumList.get(0).getPhotos().add(R.drawable.empty);}
         return albumList;
     }
 }

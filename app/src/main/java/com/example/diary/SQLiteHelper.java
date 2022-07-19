@@ -16,7 +16,7 @@ import java.util.List;
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "APP_DataBase";
-    private static final String albumTable="tbl_album";
+    private static final String albumTable="tbl_album2";
 
     public SQLiteHelper(@Nullable Context context) {
         super(context,
@@ -30,7 +30,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         try {
-            sqLiteDatabase.execSQL("CREATE TABLE "+albumTable+" (id INTEGER PRIMARY KEY AUTOINCREMENT, uri NVARCHAR, title TEXT);");
+//            sqLiteDatabase.execSQL("CREATE TABLE "+albumTable+" (id INTEGER PRIMARY KEY AUTOINCREMENT, uri NVARCHAR, title TEXT);");
             sqLiteDatabase.execSQL("CREATE TABLE " + albumTable + " (id INTEGER PRIMARY KEY AUTOINCREMENT, photoAddress int, title TEXT)");
 
             ContentValues defaultAlbum1 = new ContentValues();
@@ -58,7 +58,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db= getWritableDatabase();
         ContentValues values= new ContentValues();
         values.put("title", album.getTitle());
-        values.put("photoAddress", album.getPhotoCoverAddress());
+        values.put("photoAddress", album.getPhotoUri());
         long result= db.insert(albumTable,null,values);
         db.close();
         return result;
@@ -75,7 +75,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 album.setId(cursor.getInt(0));
                 album.setTitle(cursor.getString(2));
 //                album.setPhotos();
-                album.setPhotoCoverAddress(cursor.getInt(1));
+//                album.setPhotoCoverAddress(cursor.getInt(1));
                 albumList.add(album);
             }while(cursor.moveToNext());
             db.close();

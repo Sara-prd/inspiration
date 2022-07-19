@@ -1,6 +1,8 @@
 package com.example.diary;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class SlideFragment extends Fragment {
- private int data;
+// private int data;
+ private String data;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        data= getArguments().getInt("data");
+//        data= getArguments().getint("data");
+        data= getArguments().getString("data");
+        Log.i("SlideFragment", "onCreate: slide fragment is created");
     }
 
     @Nullable
@@ -29,7 +34,7 @@ public class SlideFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageView imageView= view.findViewById(R.id.imageView);
-        imageView.setImageResource(data);
+        imageView.setImageURI(Uri.parse(data));
 
     }
 }

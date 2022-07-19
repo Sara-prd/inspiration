@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.room.Room;
 
 import java.util.List;
 
@@ -20,12 +21,22 @@ public class MainFragment extends Fragment {
 
     private RecyclerView albumRV;
     private List<Album> albumList;
+    private AppDB appDB;
+    private AlbumDAO albumDAO;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
-        this.albumList = sqLiteHelper.getAllAlbums();
+
+        appDB= Room.databaseBuilder(getContext(), AppDB.class, "db_App")
+                .allowMainThreadQueries()
+                .build();
+        albumDAO= appDB.getAlbumDAO();
+        this.albumList=albumDAO.getAllAlbums();
+
+//        SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
+//        this.albumList = sqLiteHelper.getAllAlbums();
 //        this.albumList=DataBase.createAlbum();
     }
 
@@ -52,10 +63,13 @@ public class MainFragment extends Fragment {
 
         view.findViewById(R.id.mp_btn_add_album).setOnClickListener(view1 -> {
             Album newAlbum= new Album();
-            DataBase.addAlbum(newAlbum);
-            Log.i("album", "the new album is "+newAlbum.toString());
-
-            Log.i("album", "the number of albums are "+DataBase.getAlbumList().size());
+            newAlbum.setTitle("آلبوم جدید");
+//            newAlbum.setPhotoUri("android.resource://"+getResources().getResourceTypeName(R.drawable.empty));
+            newAlbum.setPhotoUri("android.resource://com.example.diary/drawable/empty");
+            newAlbum.setMainText("دلنوشته");
+            albumDAO.addAlbum(newAlbum);
+            albumList.add(newAlbum);
+//            DataBase.addAlbum(newAlbum);
             Bundle bundle=new Bundle();
             bundle.putParcelable("key", newAlbum);
             Navigation.findNavController(getView() ).navigate(R.id.action_mainFragment_to_photoFragment, bundle);
