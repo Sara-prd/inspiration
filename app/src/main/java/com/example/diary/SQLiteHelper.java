@@ -31,11 +31,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         try {
 //            sqLiteDatabase.execSQL("CREATE TABLE "+albumTable+" (id INTEGER PRIMARY KEY AUTOINCREMENT, uri NVARCHAR, title TEXT);");
-            sqLiteDatabase.execSQL("CREATE TABLE " + albumTable + " (id INTEGER PRIMARY KEY AUTOINCREMENT, photoAddress int, title TEXT)");
+            sqLiteDatabase.execSQL("CREATE TABLE " + albumTable +
+                    " (id INTEGER PRIMARY KEY AUTOINCREMENT, photoAddress TEXT, title TEXT)");
 
             ContentValues defaultAlbum1 = new ContentValues();
             defaultAlbum1.put("title","سفر");
-            defaultAlbum1.put("photoAddress", R.drawable.safar);
+            defaultAlbum1.put("photoAddress", String.valueOf(R.drawable.safar));
             sqLiteDatabase.insert(albumTable,null, defaultAlbum1);
 
 
@@ -66,13 +67,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     public List<Album> getAllAlbums(){
-        List<Album> albumList= new ArrayList<Album>();
+        List<Album> albumList= new ArrayList<>();
         SQLiteDatabase db= this.getReadableDatabase();
         Cursor cursor=db.rawQuery("SELECT * FROM "+albumTable,null);
         if(cursor.moveToFirst())
             do {
                 Album album = new Album();
-                album.setId(cursor.getInt(0));
+                album.setId((long) cursor.getInt(0));
                 album.setTitle(cursor.getString(2));
 //                album.setPhotos();
 //                album.setPhotoCoverAddress(cursor.getInt(1));
@@ -82,6 +83,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             return albumList;
     }
 
-    public void updateAlbum(){}
-    public void deleteAlbum(){}
+    public int updateAlbum(Album album){
+        SQLiteDatabase db= getWritableDatabase();
+        ContentValues values= new ContentValues();
+        values.put("title", album.getTitle());
+        values.put("photoAddress", album.getPhotoUri());
+        int result= db.update(albumTable, values, "id=?",new String[]{String.valueOf(album.getId())});
+        db.close();
+
+        return result;
+
+    }
+    public void deleteAlbum(){
+
+    }
 }

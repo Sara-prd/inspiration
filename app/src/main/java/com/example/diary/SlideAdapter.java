@@ -45,4 +45,10 @@ public class SlideAdapter extends FragmentStateAdapter {
 //        return album.getPhotoUri().size();
         return 1;
     }
+
+    public void addNewPhoto (String photoUri){
+        album.setPhotoUri(photoUri);
+//        notifyDataSetChanged();
+
+    };
 }

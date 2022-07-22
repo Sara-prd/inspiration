@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey;
 public class Album implements Parcelable {
 
     @PrimaryKey (autoGenerate = true)
-    private  int id;
+    private  Long id;
 
 //    @ColumnInfo (defaultValue = "نوزاد")
     private  String title;
@@ -57,11 +57,11 @@ public class Album implements Parcelable {
     }
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

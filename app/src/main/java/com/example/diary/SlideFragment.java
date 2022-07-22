@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.squareup.picasso.Picasso;
+
 public class SlideFragment extends Fragment {
 // private int data;
  private String data;
@@ -34,7 +36,8 @@ public class SlideFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageView imageView= view.findViewById(R.id.imageView);
-        imageView.setImageURI(Uri.parse(data));
+        Picasso.get().load(Uri.parse(data)).into(imageView);
+//        imageView.setImageURI(Uri.parse(data));
 
     }
 }

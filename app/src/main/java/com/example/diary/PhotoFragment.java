@@ -5,12 +5,14 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,17 +29,37 @@ import java.util.List;
 public class PhotoFragment extends Fragment {
 
 private final int PICK_IMAGE_MULTIPLE=1;
-private List<Uri> imageURIList= new ArrayList<Uri>();
+private List<Uri> imageURIList= new ArrayList<>();
 private Album album;
+private AppDB appDB;
+private AlbumDAO albumDAO;
 FloatingActionButton addButton;
 EditText mainText;
+String inputMainText;
 EditText title;
+String inputTitle;
+SlideAdapter adapter;
+ViewPager2 pager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.album=getArguments().getParcelable("key");
         Log.i("photoFragment", album.getTitle());
+        appDB=AppDB.getInstance(getContext());
+        albumDAO=appDB.getAlbumDAO();
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                albumDAO.updateAlbum(album);
+////               Bundle bundle = new Bundle();
+////               bundle.putParcelable("configuredAlbum",album);
+////               Navigation.findNavController(getView() ).navigate(R.id.action_photoFragment_to_mainFragment2,bundle);
+////               Navigation.findNavController(getView()).navigate(R.id.action_photoFragment_to_mainFragment2);
+//
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Nullable
@@ -50,8 +72,8 @@ EditText title;
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ViewPager2 pager=view.findViewById(R.id.pager);
-        SlideAdapter adapter= new SlideAdapter(this, album);
+        pager=view.findViewById(R.id.pager);
+        adapter= new SlideAdapter(this, album);
         pager.setAdapter(adapter);
 
         TabLayout tabLayout= view.findViewById(R.id.tab_layout);
@@ -61,6 +83,51 @@ EditText title;
           });
          mediator.attach();
 
+        mainText=view.findViewById(R.id.txt_mainText);
+        mainText.setText(album.getMainText());
+        mainText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                inputMainText= charSequence.toString();
+                album.setMainText(inputMainText);
+                albumDAO.updateAlbum(album);
+//                MainFragment.sqLiteHelper.updateAlbum(album);
+                Log.i("PhotoFragment","main text is updated");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        title=view.findViewById(R.id.txt_postTitle);
+        title.setText(album.getTitle());
+        title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                inputTitle=charSequence.toString();
+                album.setTitle(inputTitle);
+                albumDAO.updateAlbum(album);
+//                MainFragment.sqLiteHelper.updateAlbum(album);
+                Log.i("PhotoFragment","title is updated");}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         addButton = view.findViewById(R.id.btn_add_photo);
         addButton.setOnClickListener(view1 -> {
             Intent selectPhotoIntent=new Intent(Intent.ACTION_GET_CONTENT);
@@ -68,40 +135,47 @@ EditText title;
             selectPhotoIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             startActivityForResult(Intent.createChooser(selectPhotoIntent, "Select Picture"),PICK_IMAGE_MULTIPLE);
         });
-
-        mainText=view.findViewById(R.id.txt_mainText);
-        mainText.setOnClickListener(view1 -> {
-            album.setMainText(mainText.getText().toString());
-        });
-
-        title=view.findViewById(R.id.txt_postTitle);
-        title.setOnClickListener(view1 -> {
-            album.setTitle(title.getText().toString());
-        });
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case PICK_IMAGE_MULTIPLE:
-                if(resultCode == RESULT_OK){
-                    Log.i("selectPhoto", "some photos is selected "
-                            + "Data is: "+String.valueOf(data.getData())+" clipdata is "
-                            +String.valueOf(data.getClipData()));
-                    if(data.getClipData() != null) {
-                        int count = data.getClipData().getItemCount();
-                        for(int i = 0; i < count; i++) {
-                            imageURIList.add(data.getClipData().getItemAt(i).getUri());
-                        }
-                        Log.i("selectPhoto",imageURIList.toString());
-                    }
-                } else if(data.getData() != null) {
-                    imageURIList.add(data.getData());
+        try {
+            switch (requestCode) {
+                case PICK_IMAGE_MULTIPLE:
+                    if (resultCode == RESULT_OK & data != null) {
+                        Log.i("selectPhoto", "some photos is selected "
+                                + "Data is: " + String.valueOf(data.getData()) + " clipdata is "
+                                + String.valueOf(data.getClipData()));
+                        if (data.getClipData() != null) {
+                            int count = data.getClipData().getItemCount();
+                            for (int i = 0; i < count; i++) {
+                                imageURIList.add(data.getClipData().getItemAt(i).getUri());
+                            }
+                            Log.i("selectPhoto", imageURIList.toString());
+                        } else if (data.getData() != null) {
+                            Log.i("selectPhoto", "one photo is selected and data is: " + data.getData().toString());
+                            imageURIList.add(data.getData());
 
-                }
-                album.setPhotoUri(imageURIList.get(0).toString());
+                        }
+                        album.setPhotoUri(String.valueOf(imageURIList.get(0)));
+                        albumDAO.updateAlbum(album);
+//                        MainFragment.sqLiteHelper.updateAlbum(album);
+                        Log.i("PhotoFragment", "photo is updated");
+//                        adapter.addNewPhoto(album.getPhotoUri());
+//                        pager.setCurrentItem();
+                        adapter.notifyDataSetChanged();
+
+
+                    } else {
+                        Toast.makeText(getContext(), "you have not selected image.", Toast.LENGTH_LONG).show();
+                        Log.i("selectPhoto", "No photo is selected ");
+                    }
+
+            }
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "something went wrong.", Toast.LENGTH_LONG).show();
+            Log.i("selectPhoto", "There is an error.");
         }
 
     }

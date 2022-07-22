@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android learning videos/final project/diary/app/src/main/res/drawable-v24/ic_baseline_delete_24.xml" value="0.1465" />
         <entry key="..\:/android learning videos/final project/diary/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1485" />
         <entry key="..\:/android learning videos/final project/diary/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1485" />
+        <entry key="..\:/android learning videos/final project/diary/app/src/main/res/drawable/recycler.xml" value="0.1465" />
         <entry key="..\:/android learning videos/final project/diary/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/android learning videos/final project/diary/app/src/main/res/layout/fragment_main.xml" value="0.1" />
-        <entry key="..\:/android learning videos/final project/diary/app/src/main/res/layout/fragment_photo.xml" value="0.11684782608695653" />
+        <entry key="..\:/android learning videos/final project/diary/app/src/main/res/layout/fragment_photo.xml" value="0.22" />
         <entry key="..\:/android learning videos/final project/diary/app/src/main/res/layout/image_item.xml" value="0.1" />
         <entry key="..\:/android learning videos/final project/diary/app/src/main/res/layout/item.xml" value="0.23163841807909605" />
         <entry key="..\:/android learning videos/final project/diary/app/src/main/res/layout/layout.xml" value="0.17395833333333333" />
