@@ -3,8 +3,11 @@ package com.example.diary;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -23,13 +27,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoFragment extends Fragment {
 
 private final int PICK_IMAGE_MULTIPLE=1;
-private List<Uri> imageURIList= new ArrayList<>();
+private List<Uri> imageUriList= new ArrayList<>();
 private Album album;
 private AppDB appDB;
 private AlbumDAO albumDAO;
@@ -48,19 +53,7 @@ ViewPager2 pager;
         Log.i("photoFragment", album.getTitle());
         appDB=AppDB.getInstance(getContext());
         albumDAO=appDB.getAlbumDAO();
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                albumDAO.updateAlbum(album);
-////               Bundle bundle = new Bundle();
-////               bundle.putParcelable("configuredAlbum",album);
-////               Navigation.findNavController(getView() ).navigate(R.id.action_photoFragment_to_mainFragment2,bundle);
-////               Navigation.findNavController(getView()).navigate(R.id.action_photoFragment_to_mainFragment2);
-//
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-    }
+
 
     @Nullable
     @Override
@@ -87,53 +80,44 @@ ViewPager2 pager;
         mainText.setText(album.getMainText());
         mainText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 inputMainText= charSequence.toString();
                 album.setMainText(inputMainText);
                 albumDAO.updateAlbum(album);
-//                MainFragment.sqLiteHelper.updateAlbum(album);
                 Log.i("PhotoFragment","main text is updated");
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            public void afterTextChanged(Editable editable) {}
         });
 
         title=view.findViewById(R.id.txt_postTitle);
         title.setText(album.getTitle());
         title.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 inputTitle=charSequence.toString();
                 album.setTitle(inputTitle);
                 albumDAO.updateAlbum(album);
-//                MainFragment.sqLiteHelper.updateAlbum(album);
                 Log.i("PhotoFragment","title is updated");}
 
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            public void afterTextChanged(Editable editable) {}
         });
 
         addButton = view.findViewById(R.id.btn_add_photo);
         addButton.setOnClickListener(view1 -> {
             Intent selectPhotoIntent=new Intent(Intent.ACTION_GET_CONTENT);
-            selectPhotoIntent.setType("image/*");
+            selectPhotoIntent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI,"image/*");
             selectPhotoIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             startActivityForResult(Intent.createChooser(selectPhotoIntent, "Select Picture"),PICK_IMAGE_MULTIPLE);
+
         });
     }
 
@@ -144,27 +128,38 @@ ViewPager2 pager;
             switch (requestCode) {
                 case PICK_IMAGE_MULTIPLE:
                     if (resultCode == RESULT_OK & data != null) {
-                        Log.i("selectPhoto", "some photos is selected "
-                                + "Data is: " + String.valueOf(data.getData()) + " clipdata is "
-                                + String.valueOf(data.getClipData()));
                         if (data.getClipData() != null) {
                             int count = data.getClipData().getItemCount();
                             for (int i = 0; i < count; i++) {
-                                imageURIList.add(data.getClipData().getItemAt(i).getUri());
+                                imageUriList.add(data.getClipData().getItemAt(i).getUri());
                             }
-                            Log.i("selectPhoto", imageURIList.toString());
+                            Log.i("selectPhoto", "some photos are selected: "+imageUriList.toString());
                         } else if (data.getData() != null) {
-                            Log.i("selectPhoto", "one photo is selected and data is: " + data.getData().toString());
-                            imageURIList.add(data.getData());
+                            Log.i("selectPhoto", "one photo is selected and data uri is: " + data.getData().toString());
+                            imageUriList.add(data.getData());
+
+
+//                            DocumentFile document= DocumentFile.fromSingleUri(getContext(),data.getData());
+//                            String name=document.getName();
+//                            String imagePath= "file:/"+Environment.getExternalStorageDirectory()+"/"+name; ;
+//                            imagePathList.add(imagePath);
+//                            String newType=data.getData().getScheme();
+
+//                            Uri selectedImage = data.getData();
+//                            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//                            Cursor cursor = getContext().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+//                            cursor.moveToFirst();
+//                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                            String picturePath = cursor.getString(columnIndex);
+//                            cursor.close();
 
                         }
-                        album.setPhotoUri(String.valueOf(imageURIList.get(0)));
+                        album.setPhotoUri(imageUriList.get(0).toString());
                         albumDAO.updateAlbum(album);
-//                        MainFragment.sqLiteHelper.updateAlbum(album);
                         Log.i("PhotoFragment", "photo is updated");
 //                        adapter.addNewPhoto(album.getPhotoUri());
 //                        pager.setCurrentItem();
-                        adapter.notifyDataSetChanged();
+//                        adapter.notifyDataSetChanged();
 
 
                     } else {

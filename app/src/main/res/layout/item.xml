@@ -12,9 +12,6 @@
     android:layout_margin="8dp"
     android:id="@+id/mp_itemCard"
     >
-<!--    app:strokeColor="@color/purple_500"-->
-<!--    app:strokeWidth="4dp"-->
-<!--    app:contentPadding="4dp"-->
 
     <RelativeLayout
             android:layout_width="wrap_content"
@@ -47,12 +44,6 @@
             android:text="حذف"
             android:visibility="invisible"/>
 
-        <!--        <ImageView-->
-<!--            android:id="@+id/btn_delete_task"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:src="@drawable/ic_baseline_delete_24"/>-->
 
     </RelativeLayout>
 

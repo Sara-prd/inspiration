@@ -12,4 +12,5 @@
         android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
         app:srcCompat="@drawable/dustan" />
+
 </FrameLayout>

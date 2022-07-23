@@ -13,17 +13,9 @@ public class Album implements Parcelable {
 
     @PrimaryKey (autoGenerate = true)
     private  Long id;
-
-//    @ColumnInfo (defaultValue = "نوزاد")
     private  String title;
-
-//    @ColumnInfo(defaultValue = "android.resource://your.package.here/drawable/empty")
     private  String photoUri;
-
     private String mainText;
-
-//    @ColumnInfo (defaultValue = "نوزاد")
-//    private int photoCoverAddress;
 
 //    private  List<Integer> photos = new ArrayList<>();
 
@@ -60,7 +52,6 @@ public class Album implements Parcelable {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -68,7 +59,6 @@ public class Album implements Parcelable {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -76,7 +66,6 @@ public class Album implements Parcelable {
     public String getPhotoUri() {
         return photoUri;
     }
-
     public void setPhotoUri(String photoUri) {
         this.photoUri = photoUri;
     }
@@ -84,18 +73,10 @@ public class Album implements Parcelable {
     public String getMainText() {
         return mainText;
     }
-
     public void setMainText(String mainText) {
         this.mainText = mainText;
     }
 
-    //    public int getPhotoCoverAddress() {
-//        return photoCoverAddress;
-//    }
-//
-//    public void setPhotoCoverAddress(int photoCoverAddress) {
-//        this.photoCoverAddress = photoCoverAddress;
-//    }
 
 //    public List<Integer> getPhotos() {
 //        return photos;
@@ -104,14 +85,5 @@ public class Album implements Parcelable {
 //    public void setPhotos(List<Integer> photos) {
 //        this.photos = photos;
 //    }
-//
-//    @Override
-//    public String toString() {
-//        return "Album{" +
-//                "title='" + title + '\'' +
-//                ", photos=" + photos +
-//                '}';
-//    }
-
 
 }

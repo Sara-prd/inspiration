@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,18 +49,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         return albumList.size();
     }
 
-//    public void addNewAlbum (int photoAddress, String albumTitle){
-//        this.albumTitles.add(albumTitle);
-//        this.photoAddress.add(photoAddress);
-//        notifyItemInserted(0);
-//    };
-//
-//    public void updateAlbum(int photoAddress, String albumTitle, int position){
-//        this.photoAddress.set(position, photoAddress);
-//        this.albumTitles.set(position,albumTitle);
-//        notifyItemChanged(position);
-//    };
-
     public class AlbumViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView photo;
@@ -75,11 +64,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
         }
         public void bindContent (final Album album, int position){
             title.setText(album.getTitle());
-//            photo.setImageResource(album.getPhotos().get(0));
-//            photo.setImageResource(album.getPhotoCoverAddress());
-//            photo.setImageURI(Uri.parse(album.getPhotoUri()));
+            Picasso.get().setLoggingEnabled(true);
             Picasso.get().load(Uri.parse(album.getPhotoUri())).into(photo);
-            Log.i("album","the title became: "+title.getText());
             itemView.setOnClickListener(view -> {
                 albumClickListener.onAlbumClick(album);
                 Log.i("album", "album"+album.getTitle() +"is clicked");

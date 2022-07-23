@@ -26,22 +26,15 @@ public class MainFragment extends Fragment {
     AlbumAdapter albumAdapter;
     long id;
 
-    //    public static SQLiteHelper sqLiteHelper;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         appDB= AppDB.getInstance(getContext());
         albumDAO= appDB.getAlbumDAO();
         albumList=albumDAO.getAllAlbums();
 
-//        sqLiteHelper = new SQLiteHelper(getContext());
-//        this.albumList = sqLiteHelper.getAllAlbums();
-//        this.albumList=DataBase.createAlbum();
     }
 
     @Nullable
@@ -83,24 +76,21 @@ public class MainFragment extends Fragment {
 
                     alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
-
-
-
             }
         }) ;
         albumRV.setAdapter(albumAdapter);
 
         view.findViewById(R.id.mp_btn_add_album).setOnClickListener(view1 -> {
+
             Album newAlbum= new Album();
             newAlbum.setTitle("آلبوم جدید");
-//            newAlbum.setPhotoUri("android.resource://"+getResources().getResourceTypeName(R.drawable.empty));
             newAlbum.setPhotoUri("android.resource://com.example.diary/drawable/empty");
             newAlbum.setMainText("دلنوشته");
+
             id=albumDAO.addAlbum(newAlbum);
             newAlbum.setId(id);
-//            sqLiteHelper.addAlbum(newAlbum);
-//            DataBase.addAlbum(newAlbum);
             albumList.add(newAlbum);
+
             Bundle bundle=new Bundle();
             bundle.putParcelable("key", newAlbum);
             Navigation.findNavController(getView() ).navigate(R.id.action_mainFragment_to_photoFragment, bundle);
